@@ -1,3 +1,5 @@
+let appUrl = "https://clubs-app-john.herokuapp.com/";
+
 $(function () {
   $(".nav-link").click(function () {
     $(".active").removeClass("active");
@@ -59,7 +61,7 @@ function addClub() {
       alert(this.response);
     }
   };
-  xhr.open("POST", "http://127.0.0.1:5000/addClub", true);
+  xhr.open("POST", appUrl + "addClub", true);
   let clubName = $("#clubName").val();
   let category = $("#categories").val();
   let public = $("#public").val();
@@ -75,7 +77,7 @@ function updateClub(club_id, clubName, category, public) {
       alert(this.response);
     }
   };
-  xhr.open("POST", "http://127.0.0.1:5000/updateClub", true);
+  xhr.open("POST", appUrl + "updateClub", true);
   let body = { club_id, clubName, category, public };
   xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xhr.send(JSON.stringify(body));
@@ -88,7 +90,7 @@ function deleteClub(club_id) {
       alert(this.response);
     }
   };
-  xhr.open("DELETE", "http://127.0.0.1:5000/deleteClub", true);
+  xhr.open("DELETE", appUrl + "deleteClub", true);
   xhr.setRequestHeader("club_id", `${club_id}`);
   xhr.send();
 }
