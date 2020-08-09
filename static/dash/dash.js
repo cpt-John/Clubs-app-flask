@@ -60,6 +60,9 @@ function addClub() {
     if (this.readyState == 4) {
       alert(this.response);
     }
+    if (this.status == 200) {
+      location.reload();
+    }
   };
   xhr.open("POST", appUrl + "addClub", true);
   let clubName = $("#clubName").val();
@@ -76,6 +79,9 @@ function updateClub(club_id, clubName, category, public) {
     if (this.readyState == 4) {
       alert(this.response);
     }
+    if (this.status == 200) {
+      location.reload();
+    }
   };
   xhr.open("POST", appUrl + "updateClub", true);
   let body = { club_id, clubName, category, public };
@@ -88,6 +94,9 @@ function deleteClub(club_id) {
   xhr.onreadystatechange = function () {
     if (this.readyState == 4) {
       alert(this.response);
+    }
+    if (this.status == 200) {
+      location.reload();
     }
   };
   xhr.open("DELETE", appUrl + "deleteClub", true);

@@ -1,11 +1,9 @@
 from flask import Flask, request, Response, render_template
 from flask_sqlalchemy import SQLAlchemy
 import json
-from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DBURL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -34,7 +32,7 @@ def add_club(clubName, category=1, public=0):
         db.session.commit()
         return 'added'
     except:
-        return 'error in adding'
+        return False
 
 
 def update_club(club_id, clubName, category, public):
@@ -46,7 +44,7 @@ def update_club(club_id, clubName, category, public):
         db.session.commit()
         return 'updated'
     except:
-        return 'error in updating'
+        return False
 
 
 def delete_club(club_id):
@@ -56,7 +54,7 @@ def delete_club(club_id):
         db.session.commit()
         return 'deleted'
     except:
-        return 'error in deleting'
+        return False
 
 
 def get_categories():
@@ -94,23 +92,37 @@ def clubs():
 @app.route("/addClub", methods=['POST'])
 def addclub():
     if not request.json['clubName']:
-        return Response({'message': 'bad request'}, status=400, mimetype='application/json')
-    return add_club(request.json['clubName'], int(request.json['category']), int(request.json['public']))
+        return Response('bad request', status=400)
+    result = add_club(request.json['clubName'], int(
+        request.json['category']), int(request.json['public']))
+    if(not result):
+        return Response('error could not add', status=500)
+    else:
+        return Response(result, status=200, mimetype='application/json')
 
 
 @app.route("/updateClub", methods=['POST'])
 def updateclub():
     if not request.json['club_id']:
-        return Response({'message': 'bad request'}, status=400, mimetype='application/json')
-    return update_club(int(request.json['club_id']), request.json['clubName'], int(request.json['category']), int(request.json['public']))
+        return Response('bad request', status=400)
+    result = update_club(int(request.json['club_id']), request.json['clubName'], int(
+        request.json['category']), int(request.json['public']))
+    if(not result):
+        return Response('error could not add', status=500)
+    else:
+        return Response(result, status=200, mimetype='application/json')
 
 
 @app.route("/deleteClub", methods=['DELETE'])
 def deleteclub():
     club_id = request.headers.get('club_id')
     if not club_id:
-        return Response({'message': 'bad request'}, status=400, mimetype='application/json')
-    return delete_club(int(club_id))
+        return Response('bad request', status=400)
+    result = delete_club(int(club_id))
+    if(not result):
+        return Response('error could not add', status=500)
+    else:
+        return Response(result, status=200, mimetype='application/json')
 
 
 if __name__ == '__main__':
