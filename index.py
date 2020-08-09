@@ -2,10 +2,11 @@ from flask import Flask, request, Response, render_template
 from flask_sqlalchemy import SQLAlchemy
 import json
 from flask_cors import CORS
+import os
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://sql12359452:stegGk7KAF@sql12.freemysqlhosting.net/sql12359452'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DBURL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
