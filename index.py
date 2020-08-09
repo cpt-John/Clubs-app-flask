@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost/clubs-app'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://sql12359452:stegGk7KAF@sql12.freemysqlhosting.net/sql12359452'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
