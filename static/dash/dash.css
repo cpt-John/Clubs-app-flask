@@ -1,0 +1,19 @@
+body {
+  overflow: hidden; /* Hide scrollbars */
+}
+
+body {
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+}
+
+.table-cont {
+  overflow-x: scroll;
+}
+
+.nav-link:hover {
+  cursor: pointer !important;
+}
+.active {
+  border: 3px rgb(64, 10, 181) solid;
+}

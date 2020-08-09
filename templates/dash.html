@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/dash/dash.css" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div
+      class="modal fade"
+      id="updateModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="updateModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="updateModalLabel">Update Club</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="m_clubName">Club Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="m_clubName"
+                  placeholder="Enter club name"
+                />
+                <label for="m_categories">Club Name</label>
+                <select class="form-control" id="m_categories">
+                  <option value="1" selected>Default</option>
+                  {% for category in categories %}
+                  <option value="{{category.id}}">{{category.name}}</option>
+                  {% endfor %}
+                </select>
+                <label for="m_public">Public Visiblity</label>
+                <select class="form-control" id="m_public">
+                  <option value="0" selected>False</option>
+                  <option value="1">True</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary update-btn">
+              Save changes</button
+            >OR
+            <button type="button" class="btn btn-danger delete-btn">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <div class="navbar-brand h3">Teams-app</div>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarsExample04"
+        aria-controls="navbarsExample04"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <div class="nav-link" val="form">Add Club</div>
+          </li>
+          <li class="nav-item">
+            <div class="nav-link active" val="clubs">View Clubs</div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container p-4" id="clubs">
+      <div class="row">
+        <div class="col">
+          <h2>All Clubs</h2>
+          <p>View and manage all clubs</p>
+        </div>
+      </div>
+      <div class="row my-3">
+        <div class="col-12 pr-5">
+          <input
+            class="form-control"
+            id="search"
+            type="text"
+            placeholder="Search"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col table-cont">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Club Name</th>
+                <th scope="col">Catogories</th>
+                <th scope="col">Public</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for club in clubs %}
+              <tr class="{{club.category}}">
+                <th scope="row">{{club.id}}</th>
+                <td>{{club.name}}</td>
+                <td>{{club.category}}</td>
+                {% if club.public %}
+                <td>True</td>
+                {% else %}
+                <td class="bg-danger">False</td>
+                {% endif %}
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-primary edit-btn"
+                    data-toggle="modal"
+                    data-target="#updateModal"
+                    club_id="{{club.id}}"
+                    clubName="{{club.name}}"
+                    category="{{club.category_id}}"
+                    public="{{club.public_id}}"
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="container p-4" id="form" style="display: none;">
+      <div class="row">
+        <div class="col">
+          <h2>Form</h2>
+          <p>Add new Club</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <form>
+            <div class="form-group">
+              <label for="clubName">Club Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="clubName"
+                placeholder="Enter club name"
+              />
+              <label for="categories">Club Name</label>
+              <select class="form-control" id="categories">
+                <option value="1" selected>Default</option>
+                {% for category in categories %}
+                <option value="{{category.id}}">{{category.name}}</option>
+                {% endfor %}
+              </select>
+              <label for="public">Public Visiblity</label>
+              <select class="form-control" id="public">
+                <option value="0" selected>False</option>
+                <option value="1">True</option>
+              </select>
+              <button
+                class="btn btn-primary mt-4"
+                type="button"
+                onclick="addClub()"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="/static/dash/dash.js"></script>
+</html>
