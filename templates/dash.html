@@ -49,7 +49,6 @@
                 />
                 <label for="m_categories">Club Name</label>
                 <select class="form-control" id="m_categories">
-                  <option value="1" selected>Default</option>
                   {% for category in categories %}
                   <option value="{{category.id}}">{{category.name}}</option>
                   {% endfor %}
@@ -180,7 +179,6 @@
               />
               <label for="categories">Club Name</label>
               <select class="form-control" id="categories">
-                <option value="1" selected>Default</option>
                 {% for category in categories %}
                 <option value="{{category.id}}">{{category.name}}</option>
                 {% endfor %}
