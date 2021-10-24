@@ -47,7 +47,7 @@
                   id="m_clubName"
                   placeholder="Enter club name"
                 />
-                <label for="m_categories">Club Name</label>
+                <label for="m_categories">Club Category</label>
                 <select class="form-control" id="m_categories">
                   {% for category in categories %}
                   <option value="{{category.id}}">{{category.name}}</option>
@@ -177,7 +177,7 @@
                 id="clubName"
                 placeholder="Enter club name"
               />
-              <label for="categories">Club Name</label>
+              <label for="categories">Club Category</label>
               <select class="form-control" id="categories">
                 {% for category in categories %}
                 <option value="{{category.id}}">{{category.name}}</option>
